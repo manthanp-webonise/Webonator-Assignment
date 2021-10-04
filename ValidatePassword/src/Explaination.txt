@@ -1,0 +1,10 @@
+Name: Manthan Patil.
+TDD Assignment.
+
+Using TDD Approach,We will develop unit tests for the following conditions:
+1.Atleast one Uppercase letter.
+2.Atleast 3 lowercase letters.
+3.Atleast one digit.
+4.If all the above conditions are not met then display "Invalid-Password".
+4.If all the above conditions are met then display "Valid-Password".
+
