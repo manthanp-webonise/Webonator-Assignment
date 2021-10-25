@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: #282c34; text-align: center; margin-top: 150px;">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User form</title>
+</head>
+<body>
+    <form>
+        <input style="height: 40px; width: 300px;" type="text" id="name"  placeholder="Enter Name" required><br>
+        <span id="nameerror"></span><br>
+        <input  style="height: 40px; width: 300px;" type="email" id="email"  placeholder="Enter Email" required><br>
+        <span id="emailerror"></span><br>
+        <button style=" background: linear-gradient(to right,#14163c 0%,#03217b 79%);
+		height: 40px;
+		width: 150px;
+		color: white;
+		font-size: larger;
+		border-radius: 10px;"
+        type="submit">Submit</button>
+    </form>
+    <button  style=" margin-top: 10px; background: linear-gradient(to right,#14163c 0%,#03217b 79%);
+    height: 40px;
+    width: 150px;
+    color: white;
+    font-size: larger;
+    border-radius: 10px;"
+    onclick="showUsers()">Show Users</button>
+    <div style="margin-top: 10px; margin-left: 370px; color: white;" id="userlist"></div>
+</body>
+</html>
+
+<script>
+    
+    var userlist = [];
+    const form = document.forms[0];
+
+    // check Validation
+    validations = (name,email) => {
+
+        const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        const letters = /^[A-Za-z]+$/;
+
+        document.getElementById("emailerror").innerHTML = "";
+        document.getElementById("nameerror").innerHTML = "";
+
+        let is_valid = true;
+
+        if(!email.value.match(mailformat))
+        {
+            document.getElementById("emailerror").innerHTML = "Invalid Email";
+            is_valid = false;
+        }
+
+        if(!name.value.match(letters))
+        {
+            document.getElementById("nameerror").innerHTML = "Invalid Name";
+            is_valid = false;
+        }
+        return is_valid;
+    }
+
+    //Form Submit
+    form.addEventListener("submit", function(event) {
+
+        event.preventDefault();
+        const { name, email } = this.elements;
+        //Check validation
+        if(validations(name,email)){
+            let new_obj = {
+                "name"  : name.value,
+                "email" : email.value,
+                "time"  : new Date()
+            };
+            userlist.push(new_obj);
+        }
+    });
+
+    // ShowUser List
+    showUsers = () => {
+
+        const length = userlist.length;
+        let table = `<table border="1">
+                    <tr>
+                        <th> Name </th>
+                        <th> Email </th>
+                        <th> Time </th>
+                    </tr>`;
+
+        if(length > 0) {
+            for(let i=0; i<length; i++)
+            {
+                table +=`<tr>
+                            <td> ${userlist[i].name} </td>
+                            <td> ${userlist[i].email} </td>
+                            <td> ${userlist[i].time} </td>
+                        </tr>`;
+            }
+        } else{
+            table +=`<tr >
+                        <td colspan="3"> Record Not Found!</td>
+                    </tr>`;
+        }
+        
+        table += `</table>`;
+        document.getElementById("userlist").innerHTML = table;
+    }
+</script>
