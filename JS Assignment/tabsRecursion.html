@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" style="text-align:center; background-color: #282c34; margin-top: 200px;">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tab Recursion</title>
+</head>
+<body>
+        <button style="background: linear-gradient(to right,#14163c 0%,#03217b 79%);
+		height: 40px;
+		width: 150px;
+		color: white;
+		font-size: larger;
+		border-radius: 10px;"
+        onclick="openTab()">open tab</button>
+       
+        <button style="background: linear-gradient(to right,#14163c 0%,#03217b 79%);
+		height: 40px;
+		width: 150px;
+		color: white;
+		font-size: larger;
+		border-radius: 10px;"
+        onclick="closeTab()">close tab</button>
+</body>
+</html>
+
+<script>
+
+    let windows = [];
+
+    openTab = () => {
+        for(let i=0; i< 3; i++) {
+            windows[i] = window.open('http://www.google.com','_blank');
+        }
+
+        const length = windows.length;
+        let i=0;
+
+        setInterval(() => {
+            if(windows.length > i)
+            {
+                windows[i].close();
+                windows[i++];
+            }
+        },2000)
+    }
+
+    closeTab = () => {
+        const length = windows.length;
+        for(i=0; i<length; i++){
+            windows[i].close();
+        }
+    }
+
+</script>
